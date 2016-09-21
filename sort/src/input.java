@@ -30,7 +30,7 @@ public class input {
     public void mergeReadNWrite() throws IOException{
         ArrayList arrList = readFile();
 
-        mergeSort(arrList);
+        mergeSort(arrList, 0, arrList.size()-1);
 
         FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/hw02_00_201203406_merge.txt");
         writeFile(arrList, output);
@@ -53,13 +53,13 @@ public class input {
 
         while( (data = input.read()) != -1){
             if( data == ',') {
-                arrList.add(Integer.parseInt(buffer.toString()));
+                arrList.add(convertToInt(buffer));
                 buffer.setLength(0);
             }
             else
                 buffer.append((char)data);
         }
-        arrList.add(Integer.parseInt(buffer.toString()));
+        arrList.add(convertToInt(buffer));
         return arrList;
     }
 
@@ -77,10 +77,10 @@ public class input {
     private void insertionSort(ArrayList arrList){
         int temp, pos;
         for(int i=1 ; i<arrList.size() ; i++){
-            temp = Integer.parseInt(arrList.get(i).toString());
+            temp = convertToInt(arrList.get(i));
             pos = i;
-            while(pos > 0 && temp < Integer.parseInt(arrList.get(pos-1).toString())){
-                arrList.set(pos, Integer.parseInt(arrList.get(pos-1).toString()));
+            while(pos > 0 && temp < convertToInt(arrList.get(pos-1))){
+                arrList.set(pos, convertToInt(arrList.get(pos-1)));
                 pos = pos-1;
             }
             arrList.set(pos, temp);
@@ -91,28 +91,72 @@ public class input {
         int temp, left, right, middle;
 
         for(int i=1 ; i<arrList.size() ; i++) {
-            temp = Integer.parseInt(arrList.get(i).toString());
+            temp = convertToInt(arrList.get(i));
             left = 0;
             right = i;
             while(left < right){
                 middle = (left + right) / 2;
-                if(temp >= Integer.parseInt(arrList.get(middle).toString()))
+                if(temp >= convertToInt(arrList.get(middle)))
                     left = middle + 1;
                 else
                     right = middle;
             }
             for(int j=i ; j>left ; j--) {
-                arrList.set(j, Integer.parseInt(arrList.get(j-1).toString()));
+                arrList.set(j, convertToInt(arrList.get(j-1)));
                 arrList.set(j-1, temp);
             }
         }
     }
 
-    private void mergeSort(ArrayList arrList){
+    private void mergeSort(ArrayList arrList, int left, int right){
+        if(left < right){
+            int middle =  (left + right) / 2;
+            mergeSort(arrList, left, middle);
+            mergeSort(arrList, middle+1, right);
+            merge(arrList, left, middle, right);
+        }
+    }
 
+    private void merge(ArrayList arrList, int left, int middle, int right){
+        ArrayList tempArray = new ArrayList();
+
+        int start = left;
+        int end = middle + 1;
+
+        while(start <= middle && end <= right){
+            if(convertToInt(arrList.get(start)) <= convertToInt(arrList.get(end))){
+                tempArray.add(convertToInt(arrList.get(start)));
+                start++;
+            }
+            else{
+                tempArray.add(convertToInt(arrList.get(end)));
+                end++;
+            }
+        }
+
+        while(start <= middle){
+            tempArray.add(arrList.get(start));
+            start++;
+        }
+
+        while(end <= right){
+            tempArray.add(arrList.get(end));
+            end++;
+        }
+
+        int i=0;
+        int j=left;
+        while(i<tempArray.size()){
+            arrList.set(j,convertToInt(tempArray.get(i++)));
+            j++;
+        }
     }
 
     private void mergeSort3_Way(ArrayList arrList){
 
+    }
+
+    private int convertToInt(Object obj){
+        return Integer.parseInt(obj.toString());
     }
 }

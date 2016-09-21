@@ -9,5 +9,6 @@ public class test {
         input.insertionReadNWrite();
         input.binaryInsertionReadNWrite();
         input.mergeReadNWrite();
+        input.merge3_WayReadNWrite();
     }
 }

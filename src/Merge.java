@@ -14,8 +14,8 @@ public class Merge {
 
         mergeSort(arrList);
 
-        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/hw02_00_201203406_merge.txt");
-        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/hw02_00_201203406_merge.txt");
+        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/merge.txt");
+        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/merge.txt");
         input.writeFile(arrList, output);
     }
 

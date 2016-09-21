@@ -13,8 +13,8 @@ public class InsertionSort {
 
         insertionSort(arrList);
 
-        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/hw02_00_201203406_insertion.txt"); // windows
-        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/hw02_00_201203406_insertion.txt");
+        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/insertion.txt"); // windows
+        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/insertion.txt");
         input.writeFile(arrList, output);
     }
 

@@ -10,9 +10,9 @@ public class test {
         Merge merge = new Merge();
         Merge3_Way merge3_way = new Merge3_Way();
 
-        //insertionSort.insertionReadNWrite();
-        //insertionSortWithBSearch.binaryInsertionReadNWrite();
-        //merge.mergeReadNWrite();
+        insertionSort.insertionReadNWrite();
+        insertionSortWithBSearch.binaryInsertionReadNWrite();
+        merge.mergeReadNWrite();
         merge3_way.merge3_WayReadNWrite();
     }
 }

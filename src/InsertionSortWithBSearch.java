@@ -13,8 +13,8 @@ public class InsertionSortWithBSearch {
 
         insertionSortWithBSearch(arrList);
 
-        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/hw02_00_201203406_binary_insertion.txt");
-        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/hw02_00_201203406_binary_insertion.txt");
+        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/binary_insertion.txt");
+        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/binary_insertion.txt");
         input.writeFile(arrList, output);
     }
 

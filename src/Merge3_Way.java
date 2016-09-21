@@ -12,8 +12,8 @@ public class Merge3_Way {
 
         mergeSort3_Way(arrList);
 
-        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/hw02_00_201203406_3-way_merge.txt");
-        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/hw02_00_201203406_3-way_merge.txt");
+        FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/3-way_merge.txt");
+        //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/3-way_merge.txt");
         input.writeFile(arrList, output);
     }
 

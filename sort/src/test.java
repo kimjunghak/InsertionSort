@@ -5,10 +5,14 @@ import java.io.IOException;
  */
 public class test {
     public static void main(String args[]) throws IOException{
-        input input = new input();
-        input.insertionReadNWrite();
-        input.binaryInsertionReadNWrite();
-        input.mergeReadNWrite();
-        input.merge3_WayReadNWrite();
+        InsertionSort insertionSort = new InsertionSort();
+        InsertionSortWithBSearch insertionSortWithBSearch = new InsertionSortWithBSearch();
+        Merge merge = new Merge();
+        Merge3_Way merge3_way = new Merge3_Way();
+
+        insertionSort.insertionReadNWrite();
+        insertionSortWithBSearch.binaryInsertionReadNWrite();
+        merge.mergeReadNWrite();
+        //merge3_way.merge3_WayReadNWrite();
     }
 }

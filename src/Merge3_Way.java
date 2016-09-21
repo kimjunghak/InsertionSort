@@ -10,72 +10,119 @@ public class Merge3_Way {
     public void merge3_WayReadNWrite() throws IOException {
         ArrayList arrList = input.readFile();
 
-        mergeSort3_Way(arrList, 0, arrList.size()-1);
+        mergeSort3_Way(arrList);
 
         FileOutputStream output = new FileOutputStream("C:/Users/KJH/IdeaProjects/sort/src/hw02_00_201203406_3-way_merge.txt");
         //FileOutputStream output = new FileOutputStream("/home/kjh/Documents/git/InsertionSort/sort/src/hw02_00_201203406_3-way_merge.txt");
         input.writeFile(arrList, output);
     }
 
-    private void mergeSort3_Way(ArrayList arrList, int left, int right){
-        if(left + 2 < right){
-            int one_third = left + ((right - left) / 3);
-            int two_third = left + 2 * ((right - left) / 3);
+    private void mergeSort3_Way(ArrayList arrList){
+        int length = arrList.size();
 
-            mergeSort3_Way(arrList, left, one_third);
-            mergeSort3_Way(arrList, one_third+1, two_third);
-            mergeSort3_Way(arrList, two_third+1, right);
-            merge3_way(arrList, left, one_third, two_third, right);
-        }
+        ArrayList leftList = new ArrayList();
+        ArrayList middleList = new ArrayList();
+        ArrayList rightList = new ArrayList();
+
+        if(length < 2)
+            return;
+
+        int mid = length / 3;
+
+        for(int i=0 ; i<mid ; i++)
+            leftList.add(input.convertToInt(arrList.get(i)));
+
+        for(int j=mid ; j<mid*2+1 ; j++)
+            middleList.add(input.convertToInt(arrList.get(j)));
+
+        for(int k=mid*2+1 ; k<length ; k++)
+            rightList.add(input.convertToInt(arrList.get(k)));
+
+        mergeSort3_Way(leftList);
+        mergeSort3_Way(middleList);
+        mergeSort3_Way(rightList);
+
+        merge3_way(arrList, leftList, middleList, rightList);
     }
 
-    private void merge3_way(ArrayList arrList, int left, int one_third, int two_third, int right){
-        ArrayList tempArray = new ArrayList();
-        int start = left;
-        int mid1_3 = one_third;
-        int mid2_3 = two_third;
-        int end = right;
+    private void merge3_way(ArrayList arrList, ArrayList leftList, ArrayList middleList, ArrayList rightList) {
+        int l_length = leftList.size();
+        int m_length = middleList.size();
+        int r_length = rightList.size();
 
-        while(start <= one_third && mid1_3 <= two_third && mid2_3 <= end){
-            if(input.convertToInt(arrList.get(start)) <= input.convertToInt(arrList.get(mid1_3))){
-                if(input.convertToInt(arrList.get(start)) <= input.convertToInt(arrList.get(mid2_3)))
-                    tempArray.add(input.convertToInt(arrList.get(start++)));
-                else
-                    tempArray.add(input.convertToInt(arrList.get(mid2_3++)));
-            }
-            else{
-                if(input.convertToInt(arrList.get(mid1_3)) <= input.convertToInt(arrList.get(mid2_3)))
-                    tempArray.add(input.convertToInt(arrList.get(mid1_3++)));
-                else
-                    tempArray.add(input.convertToInt(arrList.get(mid2_3++)));
-            }
+        int pos = 0;
+        int l_idx = 0;
+        int m_idx = 0;
+        int r_idx = 0;
+
+
+        while(l_idx < l_length && m_idx < m_length && r_idx < r_length){
+            int leftN = input.convertToInt(leftList.get(l_idx));
+            int middleN = input.convertToInt(middleList.get(m_idx));
+            int rightN = input.convertToInt(rightList.get(r_idx));
+
+            if(checkRealtion3(leftN, middleN, rightN))
+                    arrList.set(pos++, input.convertToInt(leftList.get(l_idx++)));
+
+            else if(checkRealtion3(rightN, leftN, middleN))
+                    arrList.set(pos++, input.convertToInt(rightList.get(r_idx++)));
+
+            else if(checkRealtion3(middleN, leftN, rightN))
+                    arrList.set(pos++, input.convertToInt(middleList.get(m_idx++)));
+
+            else if(checkRealtion3(leftN, middleN, rightN))
+                    arrList.set(pos++, input.convertToInt(middleList.get(l_idx++)));
+
+            else if(checkRealtion3(middleN, rightN, leftN))
+                    arrList.set(pos++, input.convertToInt(middleList.get(m_idx++)));
+
+            else if(checkRealtion3(rightN, middleN, leftN))
+                    arrList.set(pos++, input.convertToInt(middleList.get(r_idx++)));
         }
 
-        while(start <= one_third && mid1_3 <= two_third){
-            if(input.convertToInt(arrList.get(start)) <= input.convertToInt(arrList.get(mid1_3)))
-                tempArray.add(input.convertToInt(arrList.get(start++)));
+        while(l_idx < l_length && m_idx < m_length){
+            if(input.convertToInt(leftList.get(l_idx)) <= input.convertToInt(middleList.get(m_idx)))
+                arrList.set(pos++, input.convertToInt(leftList.get(l_idx++)));
             else
-                tempArray.add(input.convertToInt(arrList.get(mid1_3)));
+                arrList.set(pos++, input.convertToInt(middleList.get(m_idx++)));
         }
 
-        while(start <= one_third && mid2_3 <= right){
-            if(input.convertToInt(arrList.get(start)) <= input.convertToInt(arrList.get(mid2_3)))
-                tempArray.add(input.convertToInt(arrList.get(start++)));
+        while(l_idx < l_length && r_idx < r_length){
+            if(input.convertToInt(leftList.get(l_idx)) <= input.convertToInt(rightList.get(r_idx)))
+                arrList.set(pos++, input.convertToInt(leftList.get(l_idx++)));
             else
-                tempArray.add(input.convertToInt(arrList.get(mid2_3++)));
+                arrList.set(pos++, input.convertToInt(rightList.get(r_idx++)));
         }
 
-        while(mid1_3 <= two_third && mid2_3 <= right){
-            if(input.convertToInt(arrList.get(mid1_3)) <= input.convertToInt(arrList.get(mid2_3)))
-                tempArray.add(input.convertToInt(arrList.get(mid1_3++)));
+        while(m_idx < m_length && r_idx < r_length){
+            if(input.convertToInt(middleList.get(m_idx)) <= input.convertToInt(rightList.get(r_idx)))
+                arrList.set(pos++, input.convertToInt(middleList.get(m_idx++)));
             else
-                tempArray.add(input.convertToInt(arrList.get(mid2_3++)));
+                arrList.set(pos++, input.convertToInt(rightList.get(r_idx++)));
         }
 
-        int index=0;
-        int pos=left;
+        while(l_idx < l_length)
+            arrList.set(pos++, input.convertToInt(leftList.get(l_idx++)));
 
-        while(index<tempArray.size())
-            arrList.set(pos++,input.convertToInt(tempArray.get(index++)));
+        while(m_idx < m_length)
+            arrList.set(pos++, input.convertToInt(middleList.get(m_idx++)));
+
+        while(r_idx < r_length)
+            arrList.set(pos++, input.convertToInt(rightList.get(r_idx++)));
     }
+
+    private boolean checkRealtion3(int left, int middle, int right){
+        if(left <= middle){
+            if(left < right)
+                return true;
+            else if(left == right)
+                return true;
+            else
+                return false;
+        }
+
+        else
+            return false;
+    }
+
 }
